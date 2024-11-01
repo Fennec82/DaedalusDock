@@ -186,16 +186,15 @@
 			var/datum/roll_result/result = stat_roll(12, /datum/rpg_skill/willpower)
 			switch(result.outcome)
 				if(CRIT_SUCCESS)
-
-					to_chat(src, result.create_tooltip("Pain is temporary, I will not die on this day! (Shock reduced)"))
+					to_chat(src, result.create_tooltip("Pain is temporary, I will not die on this day!"))
 					shock_stage = max(shock_stage - 15, 0)
-					stats.set_cooldown("shrug_off_pain", 60 SECONDS)
+					stats.set_cooldown("shrug_off_pain", 180 SECONDS)
 					return
 
 				if(SUCCESS)
 					shock_stage = max(shock_stage - 5, 0)
-					to_chat(src, result.create_tooltip("Not here, not now. (Pain shrugged off)"))
-					stats.set_cooldown("shrug_off_pain", 30 SECONDS)
+					to_chat(src, result.create_tooltip("Not here, not now."))
+					stats.set_cooldown("shrug_off_pain", 180 SECONDS)
 					return
 
 				if(FAILURE)
@@ -204,8 +203,8 @@
 
 				if(CRIT_FAILURE)
 					shock_stage = min(shock_stage + 1, SHOCK_MAXIMUM)
-					to_chat(src, result.create_tooltip("I'm going to die here. (Shock increased)"))
-					stats.set_cooldown("shrug_off_pain", 30 SECONDS)
+					to_chat(src, result.create_tooltip("I'm going to die here."))
+					stats.set_cooldown("shrug_off_pain", 60 SECONDS)
 					// Do not return
 
 		shock_stage = min(shock_stage + 1, SHOCK_MAXIMUM)
