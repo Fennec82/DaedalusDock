@@ -506,7 +506,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	if(!instant && !do_after(src, src, 1 SECONDS, timed_action_flags = (DO_IGNORE_USER_LOC_CHANGE|DO_IGNORE_TARGET_LOC_CHANGE|DO_IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -804,8 +804,10 @@
 
 	. = ..()
 
-	if(active_storage && !((active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent,view_only = TRUE)))
-		active_storage.hide_contents(src)
+	if(active_storage)
+		var/storage_in_self = (active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE])
+		if(!storage_in_self && !active_storage.can_be_reached_by(src))
+			active_storage.hide_contents(src)
 
 	if(!ISDIAGONALDIR(direct) && newloc != T && body_position == LYING_DOWN && !buckled && has_gravity())
 		if(length(grabbed_by))
@@ -820,6 +822,15 @@
 		set_lying_angle(90)
 	else if(direct & WEST)
 		set_lying_angle(270)
+
+/mob/living/setDir(ndir)
+	. = ..()
+	if(isnull(.))
+		return
+
+	for(var/atom/movable/AM as anything in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE])
+		if(UNLINT(length(AM.atom_storage.is_using)))
+			AM.atom_storage.update_viewability()
 
 /mob/living/carbon/alien/humanoid/lying_angle_on_movement(direct)
 	return
@@ -1066,7 +1077,7 @@
 		to_chat(src, span_warning("You are not physically capable of doing that."))
 		return FALSE
 
-	if((flags & USE_CLOSE) && !CanReach(target) && (recursive_loc_check(src, target)))
+	if((flags & USE_CLOSE) && !target.IsReachableBy(src) && (recursive_loc_check(src, target)))
 		if(issilicon(src) && !ispAI(src))
 			if(!(flags & USE_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				to_chat(src, span_warning("You are too far away."))

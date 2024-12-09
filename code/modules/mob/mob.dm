@@ -576,12 +576,12 @@
 		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
 
-	//PARIAH EDIT ADDITION
-	if(result.len)
-		for(var/i = 1, i <= result.len, i++)
-			if(!findtext(result[i], "<hr>"))
-				result[i] += "\n"
-	//PARIAH EDIT END
+	if(result[length(result)] == "") // Pop off a trailing space
+		result.len -= 1
+
+	for(var/i in 1 to length(result) - 1)
+		if(!findtext(result[i], "<hr>"))
+			result[i] += "\n"
 
 	to_chat(src, "<div class='examine_block'><span class='infoplain'>[result.Join()]</span></div>") //PARIAH EDIT CHANGE
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
@@ -754,8 +754,17 @@
 /// possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
 /// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro
 /mob/proc/_pointed(atom/pointing_at)
-	if(client && !(pointing_at in view(client.view, src)))
-		return FALSE
+	if(client)
+		var/list/viewlist = view(client.view, src)
+		if(!(pointing_at in viewlist))
+			if(!ismovable(pointing_at))
+				return FALSE
+
+			// This can also be a turf but, vis_contents bs
+			var/atom/movable/contained_within = pointing_at.loc
+			if(!(pointing_at in contained_within?.vis_contents) || !(contained_within in viewlist))
+				return FALSE
+
 
 	point_at(pointing_at)
 

@@ -354,6 +354,24 @@ DEFINE_INTERACTABLE(/obj/item)
 	. = ..()
 	update_slot_icon()
 
+/obj/item/examine_properties(mob/user)
+	. = ..()
+
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			. += PROPERTY_TINY
+		if(WEIGHT_CLASS_SMALL)
+			. += PROPERTY_SMALL
+		if(WEIGHT_CLASS_BULKY)
+			. += PROPERTY_BULKY
+		if(WEIGHT_CLASS_HUGE)
+			. += PROPERTY_HUGE
+		if(WEIGHT_CLASS_GIGANTIC)
+			. += PROPERTY_GIGANTIC
+
+	if(slot_flags)
+		. += PROPERTY_WEARABLE
+
 /obj/item/get_mechanics_info()
 	. = ..()
 	var/pronoun = gender == PLURAL ? "They" : "It"
@@ -1876,3 +1894,7 @@ DEFINE_INTERACTABLE(/obj/item)
 	center["x"] = text2num(center["x"])
 	center["y"] = text2num(center["y"])
 	return center
+
+/// Returns TRUE if the passed mob can interact with this item's storage via pickpocketing.
+/obj/item/proc/can_pickpocket(mob/living/user)
+	return FALSE

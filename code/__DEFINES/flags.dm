@@ -42,25 +42,24 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNPAINTABLE_1 (1<<10)
 /// Is the thing currently spinning?
 #define IS_SPINNING_1 (1<<11)
-#define IS_ONTOP_1 (1<<12)
-#define SUPERMATTER_IGNORES_1 (1<<13)
+#define SUPERMATTER_IGNORES_1 (1<<12)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<14)
+#define CAN_BE_DIRTY_1 (1<<13)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<15)
+#define HTML_USE_INITAL_ICON_1 (1<<14)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
-#define IS_PLAYER_COLORABLE_1 (1<<16)
+#define IS_PLAYER_COLORABLE_1 (1<<15)
 /// Whether or not this atom has contextual screentips when hovered OVER
-#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<17)
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<16)
 // Whether or not this atom is storing contents for a disassociated storage object
-#define HAS_DISASSOCIATED_STORAGE_1 (1<<18)
+#define HAS_DISASSOCIATED_STORAGE_1 (1<<17)
 // Atom has similar priority to border objects when doing Bump() calculations.
-#define BUMP_PRIORITY_1 (1<<19)
+#define BUMP_PRIORITY_1 (1<<18)
 /// If this atom has experienced a decal element "init finished" sourced appearance update
 /// We use this to ensure stacked decals don't double up appearance updates for no rasin
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me ~LemonInTheDark
-#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
+#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<19)
 
 //OH YEAH BABY FLAGS_2 HERE WE GO
 ///Plasma Contamination
@@ -283,17 +282,21 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 // timed_action_flags parameter for `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
 /// Can do the action even if mob moves location
-#define IGNORE_USER_LOC_CHANGE (1<<0)
+#define DO_IGNORE_USER_LOC_CHANGE (1<<0)
 /// Can do the action even if the target moves location
-#define IGNORE_TARGET_LOC_CHANGE (1<<1)
+#define DO_IGNORE_TARGET_LOC_CHANGE (1<<1)
 /// Can do the action even if the item is no longer being held
-#define IGNORE_HELD_ITEM (1<<2)
+#define DO_IGNORE_HELD_ITEM (1<<2)
 /// Can do the action even if the mob is incapacitated (ex. handcuffed)
-#define IGNORE_INCAPACITATED (1<<3)
+#define DO_IGNORE_INCAPACITATED (1<<3)
 /// Used to prevent important slowdowns from being abused by drugs like kronkaine
-#define IGNORE_SLOWDOWNS (1<<4)
+#define DO_IGNORE_SLOWDOWNS (1<<4)
+/// Used to prevent rotation by the user.
+#define DO_RESTRICT_USER_DIR_CHANGE (1<<5)
+/// If the user has their next_move value changed (usually by clicking), fail.
+#define DO_RESTRICT_CLICKING (1<<6)
 /// Shown to all mobs not just the user
-#define DO_PUBLIC (1<<5)
+#define DO_PUBLIC (1<<7)
 
 
 
