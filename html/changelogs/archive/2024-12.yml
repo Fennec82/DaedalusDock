@@ -52,3 +52,13 @@
   - qol: Chairs now point the correct way.
   - bugfix: Robotics is now a Medical access.
   - bugfix: Prisoners are now targeted by security robots automatically.
+2024-12-20:
+  Kapu1178:
+  - rscadd: Replaced Initropidril with Adenosine.
+  francinum:
+  - code_imp: There are now special unit tests for enforcing mapping standards.
+2024-12-23:
+  Kapu1178:
+  - bugfix: Huds (ie, the health hud) no longer rotate with the mob they are shown
+      over.
+  - bugfix: Headsets are no longer off by default.
