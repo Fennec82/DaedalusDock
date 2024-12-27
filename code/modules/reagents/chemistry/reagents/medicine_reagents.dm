@@ -151,7 +151,7 @@
 	description = "Meralyne is a concentrated form of bicaridine and can be used to treat extensive physical trauma."
 	color = "#FD5964"
 	taste_mult = 12
-	metabolization_rate = 0.2
+	metabolization_rate = 0.4
 	overdose_threshold = 20
 
 /datum/reagent/medicine/meralyne/affect_blood(mob/living/carbon/C, removed)
@@ -187,6 +187,7 @@
 	taste_mult = 1.5
 	reagent_state = LIQUID
 	color = "#ff8000"
+	metabolization_rate = 0.4
 	overdose_threshold = 20
 	value = 3.9
 
@@ -219,9 +220,9 @@
 	value = 6
 
 /datum/reagent/medicine/tricordrazine/affect_blood(mob/living/carbon/C, removed)
-	var/heal = 1 + ((clamp(round(current_cycle % 10), 0, 3))) * removed
+	var/heal = (1 + clamp(floor(current_cycle / 25), 0, 5)) * removed
 	C.heal_overall_damage(heal, heal, updating_health = FALSE)
-	C.adjustToxLoss(-heal * removed, FALSE)
+	C.adjustToxLoss(-heal, FALSE)
 	return TRUE
 
 /datum/reagent/medicine/tricordrazine/godblood
