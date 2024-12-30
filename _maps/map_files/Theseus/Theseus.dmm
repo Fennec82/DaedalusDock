@@ -1713,7 +1713,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "aDo" = (
@@ -23015,7 +23014,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "iEh" = (
@@ -24697,7 +24695,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "12"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "joU" = (
@@ -39900,12 +39897,6 @@
 	req_access_txt = "69"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical{
-	name = "Chemical Storage";
-	stripe_paint = "#ff9900";
-	req_access_txt = "69"
-	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "oPj" = (
@@ -53730,7 +53721,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron,
@@ -63583,15 +63573,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"xGi" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Deck";
-	req_one_access_txt = "1;4"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark,
-/area/station/security/deck)
 "xGs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -96273,9 +96254,9 @@ cgC
 cgC
 bhW
 gbw
-xGi
-iWI
 hQr
+iWI
+cgB
 tIJ
 wOR
 fBp
@@ -96530,9 +96511,9 @@ uiW
 uiW
 uiW
 aeU
-xGi
-iWI
 hQr
+iWI
+cgB
 nBb
 iuP
 eyI
