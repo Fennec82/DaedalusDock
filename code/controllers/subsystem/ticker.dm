@@ -122,6 +122,9 @@ SUBSYSTEM_DEF(ticker)
 	if(GLOB.is_debug_server)
 		mode = new /datum/game_mode/extended
 
+	if(CONFIG_GET(flag/hide_gamemode_name))
+		mode_display_name = "Secret"
+
 	return ..()
 
 /datum/controller/subsystem/ticker/fire()
@@ -829,8 +832,8 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
-			log_game("[get_mode_name(TRUE)] failed pre_setup, cause: [mode.setup_error].")
-			message_admins("[get_mode_name(TRUE)] failed pre_setup, cause: [mode.setup_error].")
+			log_game("[get_mode_name(TRUE)] failed pre_setup, cause(s): [english_list(mode.setup_error)].")
+			message_admins("[get_mode_name(TRUE)] failed pre_setup, cause(s): [english_list(mode.setup_error)].")
 			to_chat(world, "<B>Error setting up [get_mode_name(TRUE)].</B> Reverting to pre-game lobby.")
 			mode.on_failed_execute()
 			QDEL_NULL(mode)
