@@ -19,3 +19,14 @@
   Kapu1178:
   - rscadd: Unarmed attacks inflict different wounds based on their type.
   - rscadd: 0-damage wounds (scars) persist for some time.
+2025-02-23:
+  Kapu1178:
+  - rscadd: The Afflicted - Thirst is now shown between Sated and Dead, with "Bloodlust"
+      being represented by negative Thirst
+2025-02-26:
+  Kapu1178:
+  - bugfix: Fixed idle mob AI never triggering.
+  - bugfix: Fixed an instance of infinite overlay stacking.
+2025-02-27:
+  Kapu1178:
+  - rscadd: Afflicted can now use Neck Bite on simple mobs for a small amount of thirst.
