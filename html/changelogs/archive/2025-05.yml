@@ -14,3 +14,26 @@
   Kapu1178:
   - rscadd: Syringes can now be used as weapons.
   - balance: Increased the damage of wrenches, screwdrivers, and wirecutters.
+2025-05-03:
+  Kapu1178:
+  - rscadd: You can now click on items with an Evidence Bag to pick them up without
+      leaving your own prints on them. Additionally, you may click on another location
+      to drop the item there.
+  Metek, Kapu1178:
+  - rscadd: Removing items from and placing items into storage containers now has
+      an animation.
+  - bugfix: Public do_after() strips maptext.
+2025-05-04:
+  Kapu1178:
+  - rscadd: Added interaction animations to many common interactions.
+2025-05-09:
+  Doctor-Derp:
+  - rscadd: Added variants of existing iron, dark and white tiles.
+  - rscadd: Added a missing grey techfloor tile.
+  - rscadd: A new fancy spline decal.
+2025-05-11:
+  Kapu1178, AngriestIBM, ZeWaka:
+  - rscadd: Computer4 version 1, feat. ThinkDOS.
+2025-05-18:
+  Kapu1178:
+  - server: You now require byond 516.1659+ to connect to the server.
