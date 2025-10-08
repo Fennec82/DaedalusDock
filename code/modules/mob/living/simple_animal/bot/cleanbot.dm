@@ -258,7 +258,7 @@
 
 		if(target && path.len == 0 && (get_dist(src,target) > 1))
 			set_mode(BOT_PATHING)
-			path = jps_path_to(src, target, max_distance=30, mintargetdist=1, access = access_card?.GetAccess())
+			path = jps_path_to(src, target, max_steps=30, mintargetdist=1, access = access_card?.GetAccess())
 			set_mode(BOT_MOVING)
 			if(length(path) == 0)
 				add_to_ignore(target)
@@ -330,7 +330,7 @@
 		update_icon_state()
 		var/turf/T = get_turf(attack_target)
 		if(do_after(src, T, 1 SECOND))
-			T.wash(CLEAN_SCRUB)
+			T.wash(CLEAN_SCRUB|CLEAN_TYPE_HIDDEN_BLOOD) // I thought it'd be funny if cleanbots could clean hidden blood.
 			visible_message(span_notice("[src] cleans [T]."))
 		target = null
 		set_mode(BOT_IDLE)
@@ -386,7 +386,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
-	new /obj/item/reagent_containers/glass/bucket(drop_loc)
+	new /obj/item/reagent_containers/cup/bucket(drop_loc)
 	new /obj/item/assembly/prox_sensor(drop_loc)
 	return ..()
 

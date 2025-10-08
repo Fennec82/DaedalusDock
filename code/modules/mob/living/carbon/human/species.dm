@@ -24,6 +24,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
 	var/default_color = "#FFFFFF"
 
+	/// The type of name generator to use.
+	var/name_generator_type = /datum/name_generator/human
+
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
 	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
@@ -325,21 +328,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * lastname - Does this species' naming system adhere to the last name system? Set to false if it doesn't.
  */
 /datum/species/proc/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_name(gender)
-
-	var/randname
-	if(gender == MALE)
-		randname = pick(GLOB.first_names_male)
-	else
-		randname = pick(GLOB.first_names_female)
-
-	if(lastname)
-		randname += " [lastname]"
-	else
-		randname += " [pick(GLOB.last_names)]"
-
-	return randname
+	var/datum/name_generator/name_gen = new name_generator_type
+	name_gen.ensure_unique = unique
+	name_gen.given_surname = lastname
+	return name_gen.Generate()
 
 /**
  * Copies some vars and properties over that should be kept when creating a copy of this species.
@@ -726,7 +718,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!(I.slot_flags & slot))
 		var/excused = FALSE
 		// Anything that's small or smaller can fit into a pocket by default
-		if((slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET) && I.w_class <= WEIGHT_CLASS_SMALL)
+		if((slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET) && I.w_class <= POCKET_WEIGHT_CLASS)
 			excused = TRUE
 		else if(slot == ITEM_SLOT_SUITSTORE || slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_HANDS || slot == ITEM_SLOT_HANDCUFFED || slot == ITEM_SLOT_LEGCUFFED)
 			excused = TRUE

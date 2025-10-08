@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 46
+#define SAVEFILE_VERSION_MAX 47
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -60,34 +60,46 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 46)
 		migrate_hairstyles(save_data)
 
+	if(current_version < 47)
+		migrate_skintones(save_data)
+
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
 		return
+
+	// Binding -> Key
 	var/list/binds_by_key = get_key_bindings_by_key(key_bindings)
 	var/list/notadded = list()
+
 	for (var/name in GLOB.keybindings_by_name)
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
 		if(kb.name in key_bindings)
-			continue // key is unbound and or bound to something
+			continue // Key already has an assigned binding, including unbound
 
 		var/addedbind = FALSE
 		key_bindings[kb.name] = list()
 
 		if(parent.hotkeys)
 			for(var/hotkeytobind in kb.hotkey_keys)
-				if(!length(binds_by_key[hotkeytobind]) && hotkeytobind != "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
+				if(hotkeytobind == "Unbound")
+					addedbind = TRUE
+				else if(!length(binds_by_key[hotkeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= hotkeytobind
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
-				if(!length(binds_by_key[classickeytobind]) && classickeytobind != "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
+				if(classickeytobind == "Unbound")
+					addedbind = TRUE
+				else if(!length(binds_by_key[classickeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= classickeytobind
 					addedbind = TRUE
 
 		if(!addedbind)
 			notadded += kb
+
 	save_preferences() //Save the players pref so that new keys that were set to Unbound as default are permanently stored
+
 	if(length(notadded))
 		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 

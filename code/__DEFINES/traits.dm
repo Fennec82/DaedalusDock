@@ -114,6 +114,9 @@
 #define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits?[trait] && (length(target.status_traits[trait] - source) > 0))
 
+/// Helper for when a trait can be a mind or body trait.
+#define HAS_MIND_TRAIT(target, trait) (HAS_TRAIT(target, trait) || (target.mind && HAS_TRAIT(target.mind, trait)))
+
 /// For use in start/stop metabolize. Since we don't want touch metabolism ending to interrupt bloodstream chems of the same type, etc.
 #define CHEM_TRAIT_SOURCE(class) "[type]_[class]"
 
@@ -424,6 +427,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLUSHING "blushing"
 /// This bodypart is being held in a grab, and reduces bleeding
 #define TRAIT_BODYPART_GRABBED "bodypart_grabbed"
+/// This limb's bone is set. Used by surgery.
+#define TRAIT_BONE_SET "bone_set"
 /// This carbon doesn't bleed
 #define TRAIT_NOBLEED "nobleed"
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -477,6 +482,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Smoke temporarily cannot affect this mob.
 #define TRAIT_AFFECTED_BY_SMOKE_RECENTLY "affected_by_smoke_recently"
+
+/// A trait applied to objects with the capacity to be revealed by UV.
+#define TRAIT_MOVABLE_FLUORESCENT "flourescence"
+/// A trait applied to objects that are revealed by something
+#define TRAIT_MOVABLE_FLUORESCENCE_REVEALED "fluorescence_revealed"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -623,6 +633,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_REPLACES_VOICE "replaces_voice"
 /// Pickpocketing this item takes no time.
 #define TRAIT_INSTANT_PICKPOCKET "instant_pickpocket"
+/// A transforming item that is actively extended / transformed
+#define TRAIT_TRANSFORM_ACTIVE "active_transform"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"

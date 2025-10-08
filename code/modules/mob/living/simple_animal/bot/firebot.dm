@@ -69,7 +69,7 @@
 	if(!can_unarmed_attack())
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.ranged_interact_with_atom(A, src)
 	else
 		return ..()
 
@@ -77,7 +77,7 @@
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.ranged_interact_with_atom(A, src)
 	else
 		return ..()
 
@@ -228,7 +228,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 		set_mode(BOT_PATHING)
-		path = jps_path_to(src, target_fire, max_distance=30, mintargetdist=1, access = access_card?.GetAccess())
+		path = jps_path_to(src, target_fire, max_steps=30, mintargetdist=1, access = access_card?.GetAccess())
 		set_mode(BOT_MOVING)
 		if(!path.len)
 			soft_reset()
@@ -275,7 +275,8 @@
 		z_flick("firebots_use", user)
 	else
 		z_flick("firebot1_use", user)
-	internal_ext.afterattack(target, user, null)
+
+	internal_ext.ranged_interact_with_atom(target, user)
 
 /mob/living/simple_animal/bot/firebot/update_icon_state()
 	. = ..()

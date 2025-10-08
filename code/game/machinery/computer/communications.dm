@@ -275,7 +275,7 @@
 			bank_account.adjust_money(-shuttle.credit_cost)
 
 			var/purchaser_name = (obj_flags & EMAGGED) ? scramble_message_replace_chars("AUTHENTICATION FAILURE: CVE-2018-17107", 60) : usr.real_name
-			minor_announce("[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+			minor_announce("[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] marks.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
 
 			message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [shuttle.name].")
 			log_shuttle("[key_name(usr)] has purchased [shuttle.name].")
@@ -422,10 +422,6 @@
 				to_chat(usr, span_warning("The safe code has already been requested and delivered to your station!"))
 				return
 
-			if(!SSid_access.spare_id_safe_code)
-				to_chat(usr, span_warning("There is no safe code to deliver to your station!"))
-				return
-
 			var/turf/pod_location = get_turf(src)
 
 			SSjob.safe_code_request_loc = pod_location
@@ -479,7 +475,7 @@
 	var/has_connection = has_communication()
 	data["hasConnection"] = has_connection
 
-	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
+	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && has_connection)
 		data["canRequestSafeCode"] = TRUE
 		data["safeCodeDeliveryWait"] = 0
 	else

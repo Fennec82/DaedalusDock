@@ -70,9 +70,6 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
 	return pick(GLOB.socks_list)
 
-/proc/random_backpack()
-	return pick(GLOB.backpacklist)
-
 /proc/random_features()
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
@@ -135,83 +132,23 @@
 		else
 			return pick(GLOB.facial_hairstyles_list)
 
-/proc/random_unique_name(gender, attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		if(gender==FEMALE)
-			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
-		else
-			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(lizard_name(gender))
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_vox_name(attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(vox_name())
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(ethereal_name())
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_moth_name(attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_teshari_name(attempts_to_find_unique_name = 10)
-	for(var/I in 1 to attempts_to_find_unique_name)
-		. = teshari_name()
-
-		if(!findname(.))
-			break
-
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
 GLOBAL_LIST_INIT(skin_tones, sort_list(list(
-	"albino",
-	"caucasian1",
-	"caucasian2",
-	"caucasian3",
-	"latino",
-	"mediterranean",
-	"asian1",
-	"asian2",
-	"arab",
-	"indian",
-	"african1",
-	"african2"
+	"Albino" = "#fff4e6",
+	"Fjällröker" = "#ffe0d1",
+	"Orleanian" = "#fcccb3",
+	"Saxon" = "#e8b59b",
+	"Estranian" = "#d9ae96",
+	"Ravennar" = "#c79b8b",
+	"Shaantian (North)" = "#ffdeb3",
+	"Ikkonese" = "#e3ba84",
+	"Emerati" = "#c4915e",
+	"Shaantian (South)" = "#b87840",
+	"Gondari (East)" = "#754523",
+	"Gondari (West)" = "#471c18"
 	)))
-
-GLOBAL_LIST_INIT(skin_tone_names, list(
-	"african1" = "Medium brown",
-	"african2" = "Dark brown",
-	"albino" = "Albino",
-	"arab" = "Light brown",
-	"asian1" = "Ivory",
-	"asian2" = "Beige",
-	"caucasian1" = "Porcelain",
-	"caucasian2" = "Light peach",
-	"caucasian3" = "Peach",
-	"indian" = "Brown",
-	"latino" = "Light beige",
-	"mediterranean" = "Olive",
-))
 
 /// An assoc list of species IDs to type paths
 GLOBAL_LIST_EMPTY(species_list)
@@ -553,6 +490,11 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
+
+	var/mob/pmob = GLOB.persistent_clients_by_ckey[key]?.mob
+	if(pmob)
+		return pmob
+
 	var/list/mobs = sort_mobs()
 	for(var/mob/mob in mobs)
 		if(mob.ckey == key)

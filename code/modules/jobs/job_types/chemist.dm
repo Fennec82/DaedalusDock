@@ -22,7 +22,7 @@
 		),
 	)
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = /datum/job/acolyte::paycheck
 	paycheck_department = ACCOUNT_MED
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
@@ -32,8 +32,8 @@
 	)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/glass/bottle/flash_powder = 15,
-		/obj/item/reagent_containers/glass/bottle/leadacetate = 5,
+		/obj/item/reagent_containers/cup/bottle/flash_powder = 15,
+		/obj/item/reagent_containers/cup/bottle/leadacetate = 5,
 		/obj/item/paper/secretrecipe = 1
 	)
 	rpg_title = "Alchemist"
@@ -53,9 +53,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	r_pocket = /obj/item/reagent_containers/syringe
 
-	backpack = /obj/item/storage/backpack/chemistry
-	satchel = /obj/item/storage/backpack/satchel/chem
-	duffelbag = /obj/item/storage/backpack/duffelbag/chemistry
+	back = /obj/item/storage/backpack/chemistry
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe

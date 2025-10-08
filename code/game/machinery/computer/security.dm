@@ -370,10 +370,10 @@
 						for(var/datum/data/crime/c in active2.fields[DATACORE_CITATIONS])
 							var/owed = c.fine - c.paid
 							dat += {"<tr><td>[c.crimeName]</td>
-							<td>[c.fine] cr</td><td>[c.author]</td>
+							<td>[c.fine] FM</td><td>[c.author]</td>
 							<td>[c.time]</td>"}
 							if(owed > 0)
-								dat += "<td>[owed] cr <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
+								dat += "<td>[owed] FM <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
 							else
 								dat += "<td>All Paid Off</td>"
 							dat += {"<td>
@@ -944,7 +944,7 @@ Age: [active1.fields[DATACORE_AGE]]<BR>"}
 							return
 
 						var/datum/data/crime/crime = SSdatacore.new_crime_entry(t1, "", authenticated, stationtime2text(), fine)
-						var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+						var/obj/machinery/announcement_system/announcer = pick_safe(GLOB.announcement_systems)
 						if(announcer)
 							announcer.notify_citation(active1.fields[DATACORE_NAME], t1, fine)
 
@@ -1114,10 +1114,12 @@ Age: [active1.fields[DATACORE_AGE]]<BR>"}
 		if(prob(10/severity))
 			switch(rand(1,6))
 				if(1)
+					var/generator_type = /datum/name_generator/human
 					if(prob(10))
-						R.fields[DATACORE_NAME] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
-					else
-						R.fields[DATACORE_NAME] = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+						generator_type = pick(subtypesof(/datum/name_generator) - /datum/name_generator/human)
+
+					var/datum/name_generator/name_gen = new generator_type
+					R.fields[DATACORE_NAME] = name_gen.Generate()
 				if(2)
 					R.fields[DATACORE_GENDER] = pick("Male", "Female", "Other")
 				if(3)

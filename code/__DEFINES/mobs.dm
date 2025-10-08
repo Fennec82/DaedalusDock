@@ -489,6 +489,8 @@
 #define CE_ANTICOAGULANT "anticoagulant"
 /// Enables brain regeneration even in poor circumstances
 #define CE_BRAIN_REGEN "brainregen"
+/// Suppresses the VISIBLE effects of hunger, hunger is still happening tho.
+#define CE_HIDE_HUNGER "hide_hunger"
 
 // Pulse levels, very simplified.
 #define PULSE_NONE 0 // So !M.pulse checks would be possible.
@@ -827,13 +829,15 @@ GLOBAL_LIST_INIT(voice_type2sound_ref, voice_type2sound)
 #define BREATH_FAILED -2
 
 /// Attack missed.
-#define MOB_ATTACKEDBY_MISS 3
+#define MOB_ATTACKEDBY_MISS -1
 /// Attack completely failed (missing user, etc)
 #define MOB_ATTACKEDBY_FAIL 0
 /// Attack hit and dealt damage.
 #define MOB_ATTACKEDBY_SUCCESS 1
 /// Attack hit but did no damage.
 #define MOB_ATTACKEDBY_NO_DAMAGE 2
+/// Attack was hit but was blocked.
+#define MOB_ATTACKEDBY_BLOCKED 3
 
 #define BLIND_NOT_BLIND 0
 #define BLIND_PHYSICAL 1

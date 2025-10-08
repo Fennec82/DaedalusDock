@@ -171,7 +171,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/outfit_manager,
 	/client/proc/open_colorblind_test,
 	/client/proc/generate_wikichem_list,
-	/client/proc/modify_goals,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
@@ -211,6 +210,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/debug_spell_requirements,
 	/client/proc/analyze_openturf,
 	/client/proc/debug_health,
+	/client/proc/debug_pathfinding,
 )
 
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, GLOBAL_PROC_REF(release)))

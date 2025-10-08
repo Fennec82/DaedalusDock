@@ -131,6 +131,7 @@
 			reorganize_alerts(M)
 	return 1
 
+DEFINE_INTERACTABLE(/atom/movable/screen/alert)
 /atom/movable/screen/alert
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
@@ -467,27 +468,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.offerer = offerer
-
-/// Gives the player the option to succumb while in critical condition
-/atom/movable/screen/alert/succumb
-	name = "Succumb"
-	desc = "Shuffle off this mortal coil."
-	icon_state = ALERT_SUCCUMB
-
-/atom/movable/screen/alert/succumb/Click()
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/living_owner = owner
-	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Final Words")
-	if (!last_whisper)
-		return
-
-	if (length(last_whisper))
-		living_owner.say("#[last_whisper]")
-
-	living_owner.succumb(whispered = length(last_whisper) > 0)
 
 //ALIENS
 
@@ -916,3 +896,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Traumatic Shock"
 	desc = "You've endured a significant amount of pain."
 	icon_state = "convulsing"
+
+/atom/movable/screen/alert/status_effect/sleepy_time
+	name = "Sleep?"
+	desc = "Click to try to sleep."
+	icon_state = "trywakeup"
+
+/atom/movable/screen/alert/status_effect/sleepy_time/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+
+	astype(attached_effect, /datum/status_effect/buckled_to_bed).toggle_sleep_intent()
+
+/atom/movable/screen/alert/status_effect/sleepy_time/end
+	name = "Wake up?"
+	desc = "Click to try to wake up."
+	icon_state = "trysleep"

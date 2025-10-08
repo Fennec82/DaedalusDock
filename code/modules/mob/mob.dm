@@ -456,7 +456,7 @@
 		if(qdel_on_fail)
 			qdel(W)
 		else if(!disable_warning)
-			to_chat(src, span_warning("You are unable to equip that!"))
+			to_chat(src, span_warning("You are unable to equip that."))
 		return FALSE
 	equip_to_slot(W, slot, initial, redraw_mob) //This proc should not ever fail.
 	return TRUE
@@ -1201,11 +1201,6 @@
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
-	if(istype(A, /atom/movable/screen))
-		var/atom/movable/screen/screen = A
-		if(screen.hud?.mymob ==src)
-			return TRUE
-
 	if(isAdminGhostAI(src) || Adjacent(A))
 		return TRUE
 

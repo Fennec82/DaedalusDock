@@ -75,17 +75,15 @@
 	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
 	return OXYLOSS
 
-/obj/item/clothing/neck/stethoscope/attack(mob/living/M, mob/living/user)
-	if(!ishuman(M) || !isliving(user))
-		return ..()
-	if(user.combat_mode)
-		return ..()
+/obj/item/clothing/neck/stethoscope/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ishuman(interacting_with))
+		return NONE
 
-	var/mob/living/carbon/human/patient = M
-	var/obj/item/bodypart/listening_to = M.get_bodypart(user.zone_selected)
+	var/mob/living/carbon/human/patient = interacting_with
+	var/obj/item/bodypart/listening_to = patient.get_bodypart(user.zone_selected)
 
-	if(!do_after(user, M, 5 SECONDS, DO_RESTRICT_USER_DIR_CHANGE|DO_PUBLIC, display = src))
-		return
+	if(!do_after(user, patient, 5 SECONDS, DO_RESTRICT_USER_DIR_CHANGE|DO_PUBLIC, display = src))
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_subtle("[user] places [src] against [patient]'s [listening_to.plaintext_zone]."),
@@ -94,6 +92,8 @@
 	if(user.can_hear())
 		var/list/heard = listening_to.stethoscope_listen()
 		to_chat(user, span_hear("You hear [english_list(heard)]."))
+
+	return ITEM_INTERACT_SUCCESS
 
 ///////////
 //SCARVES//
@@ -216,10 +216,16 @@
 	selling = !selling
 	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
 
-/obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/clothing/neck/necklace/dope/merchant/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return
+
+	if(ATOM_HAS_FIRST_CLASS_INTERACTION(interacting_with))
+		return NONE
+
+	var/atom/I = interacting_with // Yes i am supremely lazy
+
 	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
@@ -227,11 +233,16 @@
 
 	if(price)
 		var/true_price = round(price*profit_scaling)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> marks[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
 			SSeconomy.spawn_ones_for_amount(true_price, get_turf(user))
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+
+	return ITEM_INTERACT_SUCCESS
+
+TYPEINFO_DEF(/obj/item/clothing/neck/beads)
+	default_materials = list(/datum/material/plastic = 500)
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"
@@ -240,7 +251,6 @@
 	icon_state = "beads"
 	color = "#ffffff"
 	custom_price = PAYCHECK_ASSISTANT * 0.2
-	custom_materials = (list(/datum/material/plastic = 500))
 
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()

@@ -1,38 +1,3 @@
-//Command
-
-/obj/item/circuitboard/machine/bsa/back
-	name = "Bluespace Artillery Generator (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/bsa/back //No freebies!
-	req_components = list(
-		/obj/item/stock_parts/capacitor/quadratic = 5,
-		/obj/item/stack/cable_coil = 2)
-
-/obj/item/circuitboard/machine/bsa/front
-	name = "Bluespace Artillery Bore (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/bsa/front
-	req_components = list(
-		/obj/item/stock_parts/manipulator/femto = 5,
-		/obj/item/stack/cable_coil = 2)
-
-/obj/item/circuitboard/machine/bsa/middle
-	name = "Bluespace Artillery Fusor (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/bsa/middle
-	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 20,
-		/obj/item/stack/cable_coil = 2)
-
-/obj/item/circuitboard/machine/dna_vault
-	name = "DNA Vault (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/dna_vault //No freebies!
-	req_components = list(
-		/obj/item/stock_parts/capacitor/super = 5,
-		/obj/item/stock_parts/manipulator/pico = 5,
-		/obj/item/stack/cable_coil = 2)
-
 //Engineering
 
 /obj/item/circuitboard/machine/announcement_system
@@ -341,7 +306,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/disk/data = 1
 	)
 	def_components = list(
@@ -402,7 +367,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/disk/data = 1
 	)
 	def_components = list(
@@ -644,7 +609,7 @@
 	build_path = /obj/machinery/chem_master
 	desc = "You can turn the \"mode selection\" dial using a screwdriver."
 	req_components = list(
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
@@ -690,7 +655,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/disk/data = 1
 	)
@@ -704,7 +669,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator/femto  = 1,
-		/obj/item/reagent_containers/glass/beaker/bluespace = 2,
+		/obj/item/reagent_containers/cup/beaker/bluespace = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/disk/data = 1
 	)

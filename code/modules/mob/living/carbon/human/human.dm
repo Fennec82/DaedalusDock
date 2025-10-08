@@ -313,7 +313,7 @@
 					announcer.notify_citation(security_record.fields[DATACORE_NAME], t1, fine)
 				// for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
 				// 	if(tablet.saved_identification == R.fields[DATACORE_NAME])
-				// 		var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
+				// 		var/message = "You have been fined [fine] marks for '[t1]'. Fines may be paid at security."
 				// 		var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
 				// 			"name" = "Security Citation",
 				// 			"job" = "Citation Server",
@@ -382,7 +382,7 @@
 				var/counter = 1
 				while(security_record.fields["com_[counter]"])
 					counter++
-				security_record.fields["com_[counter]"] = "Made by [allowed_access] on [stationtime2text()] [time2text(world.realtime, "MMM DD")], [CURRENT_STATION_YEAR]<BR>[t1]"
+				security_record.fields["com_[counter]"] = "Made by [allowed_access] on [stationtime2text()] [time2text(world.realtime, "MMM DD")], '77<BR>[t1]"
 				to_chat(usr, span_notice("Successfully added comment."))
 				return
 
@@ -835,8 +835,8 @@
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
-			visible_message(span_warning("[src] dry heaves!"), \
-							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
+			spawn(-1)
+				emote(/datum/emote/living/carbon/gasp_air/dry_heave)
 		if(stun)
 			Paralyze(200)
 		return 1

@@ -18,6 +18,9 @@
 	host.overlay_fullscreen("bloodlust", /atom/movable/screen/fullscreen/curse/bloodlust, 1)
 	ADD_TRAIT(host, TRAIT_STRONG_GRABBER, VAMPIRE_TRAIT)
 
+	SEND_SOUND(host, sound('sound/effects/abilities/vampire/rage_start.ogg', channel = CHANNEL_PANIC_LOOP, volume = 50))
+	SEND_SOUND(host, sound('sound/effects/abilities/vampire/panic_loop.ogg', repeat = TRUE, wait = TRUE, channel = CHANNEL_PANIC_LOOP, volume = 50))
+
 	for(var/obj/item/bodypart/arm/arm in host.bodyparts)
 		arm_weakrefs += WEAKREF(arm)
 		arm.unarmed_damage_low = 7
@@ -27,6 +30,7 @@
 		arm.unarmed_attack_sound = 'sound/weapons/slice.ogg'
 		arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
+	host.client?.give_award(/datum/award/achievement/antag/very_thirsty, host)
 
 /datum/vampire_state/bloodlust/exit_state(mob/living/carbon/human/host)
 	. = ..()
@@ -37,6 +41,8 @@
 	host.remove_client_colour(/datum/client_colour/bloodlust)
 	host.clear_fullscreen("bloodlust")
 	REMOVE_TRAIT(host, TRAIT_STRONG_GRABBER, VAMPIRE_TRAIT)
+
+	SEND_SOUND(host, sound('sound/effects/abilities/vampire/rage_end.ogg', channel = CHANNEL_PANIC_LOOP, volume = 50))
 
 	for(var/datum/weakref/W in arm_weakrefs)
 		var/obj/item/bodypart/arm/arm = W.resolve()

@@ -5,12 +5,14 @@
 /// Returns JAUNDICE_EYES or JAUNDICE_SKIN if the mob would have yellowed skin/eyes.
 /mob/living/carbon/proc/undergoing_jaundice()
 	if(!needs_organ(ORGAN_SLOT_LIVER))
-		return FALSE
+		return NONE
 
 	if(HAS_TRAIT(src, TRAIT_JAUNDICE_SKIN))
 		return JAUNDICE_SKIN
 
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	if(!liver)
+		return JAUNDICE_SKIN
 	if(liver.damage > (liver.low_threshold * liver.maxHealth))
 		return JAUNDICE_EYES
 
@@ -135,6 +137,9 @@
 /mob/living/carbon/proc/can_autoheal(damtype)
 	if(!damtype)
 		CRASH("No damage type given to can_autoheal")
+
+	if(nutrition <= NUTRITION_LEVEL_STARVING)
+		return FALSE
 
 	switch(damtype)
 		if(BRUTE)

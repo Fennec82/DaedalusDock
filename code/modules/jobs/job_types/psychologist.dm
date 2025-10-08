@@ -8,6 +8,8 @@
 	spawn_positions = 1
 	supervisors = "the medical director"
 	selection_color = "#013d3b"
+
+	pinpad_key = "FEELSGOODMAN"
 	exp_granted_type = EXP_TYPE_CREW
 
 	employers = list(
@@ -21,7 +23,7 @@
 		),
 	)
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = /datum/job/acolyte::paycheck
 	paycheck_department = ACCOUNT_MED
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
@@ -59,9 +61,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/clipboard
 
-	backpack = /obj/item/storage/backpack/medic
-	satchel = /obj/item/storage/backpack/satchel/med
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	back = /obj/item/storage/backpack/medic
 
 	pda_slot = ITEM_SLOT_BELT
 	skillchips = list(/obj/item/skillchip/job/psychology)
